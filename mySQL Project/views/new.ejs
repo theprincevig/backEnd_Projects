@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add new user</title>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@500;600;700;900&display=swap');
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        transition: 0.3s;
+    }
+    body {
+        width: 100%;
+        height: 100dvh;
+        background: linear-gradient(120deg, #191922, #101016);
+        color: #fff;
+        font-family: 'Poppins', sans-serif;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .create-user-form {
+        width: 30%;
+        height: 60%;
+        border: solid 2px #FFFFFF1A;
+        background: linear-gradient(to top, #9999990D, #FFFFFF0D);
+        display: flex;
+        flex-direction: column;
+        border-radius: 12px;
+        padding: 20px;
+    }
+    .create-user-heading {
+        margin: 0 auto;
+        margin-top: 5px;
+        margin-bottom: 12%;
+    }
+    input {
+        display: block;
+        width: 100%;
+        padding: 15px 10px;
+        border-radius: 25px;
+        margin: 2px 0 5%;
+        border: none;
+        outline: none;
+        font-size: 14px;
+    }
+    input:hover {
+        transform: translateY(5px);
+    }
+    p {
+        font-size: 14px;
+        color: #FFFFFFB3;
+        margin-left: 10px;
+        transition: 0.75s;
+    }
+    p:hover {
+        color: #fff;
+        cursor: default;
+    }
+    button {
+        width: 45%;
+        margin: 0 auto;
+        padding: 10px 15px;
+        font-size: 20px;
+        font-weight: 600;
+        background: #490CCC;
+        color: #fff;
+        border: none;
+        outline: none;
+        border-radius: 15px;
+        margin-top: 4%;
+        cursor: pointer;
+        transition: 0.10s;
+    }
+    button:hover { background: #32098F; }
+    button:active {
+        opacity: 0.5;
+        transform: scale(0.8);
+    }
+</style>
+<body>
+    <form method="POST" action="/user" class="create-user-form">
+        <h1 class="create-user-heading">New User</h1>
+        <p>Your email</p>
+        <input placeholder="enter your email" name="email" type="email">
+        <p>username</p>
+        <input placeholder="enter username" name="username" type="text">
+        <p>password</p>
+        <input placeholder="enter password" name="password" type="password">
+        <button>Create</button>
+    </form>
+</body>
+</html>

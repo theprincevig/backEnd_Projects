@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home page</title>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@500;600;700;900&display=swap');
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        transition: 0.3s;
+    }
+    body {
+        background: linear-gradient(120deg, #191922, #101016);
+        color: #fff;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    .container {
+        width: 100%;
+        height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .message {
+        margin-top: 10px;
+        font-size: 12px;
+    }
+    button a {
+        text-decoration: none;
+        color: black;
+    }
+    button {
+        margin-top: 2%;
+        padding: 5px 15px;
+        border-radius: 10px;
+        font-size: larger;
+        border: none;
+        outline: none;
+        cursor: pointer;
+    }
+    button:hover {
+        opacity: 0.75;
+    }
+</style>
+<body>
+    <div class="container">
+        <h2>Here are the current users : <%= count %></h2>
+        <p class="message">Join us by clicking the button below</p>
+        <button><a href="http://localhost:8080/user">Join</a></button>
+    </div>
+</body>
+</html>
