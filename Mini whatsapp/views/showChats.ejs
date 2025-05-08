@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All chats</title>
+</head>
+<!-- CHATS STYLING -->
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap');
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        transition: 0.5s;
+    }
+    body {
+        width: 100%;
+        height: 100vh;
+        font-family: 'Poppins', sans-serif;
+        background: #E5F5E0;
+    }
+
+    .main-heading {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #006D2C;
+        font-family: 'Sour Gummy', sans-serif;
+        font-size: 30px;
+    }
+
+    button { cursor: pointer; }
+
+    .new-btn {
+        margin: 10px auto;
+        display: flex;
+        justify-content: center;
+    }
+    .new-btn button {
+        padding: 10px 20px;
+        border: none;
+        outline: none;
+        font-size: 16px;
+        font-weight: 600;
+        background: #238B45;
+        color: #fff;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: 0.2s;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.35);
+        animation: move 3s 1s infinite alternate;
+    }
+    .new-btn button:hover { background: #006D2C; }
+    .new-btn button:active {
+        opacity: 0.75;
+        transform: scale(0.85);
+    }
+    @keyframes move {
+        0% {
+            transform: scale(1);
+        }
+        100% {
+            transform: scale(1.1);
+        }
+    }
+
+    .container {
+        margin-top: 20px;
+        padding: 0 20px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    .heading {
+        position: absolute;
+        font-size: 35px;
+        color: #fff;
+        text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    .chat-box {
+        border-radius: 20px;
+        padding: 20px;
+        background: #C7E9C0;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        transition: box-shadow ease;
+    }
+    .chat-box:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .delete-btn { text-align: right; }
+    .delete-btn svg {
+        width: 1.9rem;
+        height: 1.9rem;
+        padding: 5px;
+        border-radius: 99px;
+        opacity: 0;
+        cursor: pointer;
+        fill: grey;
+    }
+    .chat-box:hover svg { opacity: 1; }
+    .delete-btn svg:hover {
+        fill: black;
+        transition: 150ms;
+        background: #F7FCF5;
+    }
+
+    .msg-box {
+        margin: 2px 0;
+        width: 100%;
+        padding: 18px 8px;
+        border-radius: 18px 18px 0px 18px;
+        display: flex;
+        justify-content: space-between;
+        background: #41AB5D;
+        color: #fff;
+    }
+    .msg-box p {
+        font-weight: 600;
+        font-family: cursive;
+    }
+    .msg-box form {
+        opacity: 0;
+        font-size: 12px;
+        transform: scale(0.9);
+        margin-top: 15px;
+        margin-right: 5px;
+    }
+    .msg-box:hover form {
+        opacity: 1;
+        transform: scale(1);
+    }
+    .msg-box form button {
+        border: none;
+        outline: none;
+        background: none;
+        color: #FFFFFFB3;
+        transition: 200ms;
+        cursor: pointer;
+    }
+    .msg-box form button:hover { color: #FFF; }
+
+    #sent-by {
+        margin-top: 10px;
+        margin-left: 15px;
+        font-size: 10px;
+        font-family: Helvetica;
+    }
+    #seen-by {
+        text-align: right;
+        margin: 4px 8px 10px 0;
+        font-size: 10px;
+        font-family: Helvetica;
+    }
+
+    .date-and-time {
+        margin-top: 4px;
+        margin-left: 10px;
+        width: 90%;
+        display: flex;
+        justify-content: space-between;
+        font-size: 12px;
+    }
+</style>
+<!-- END -->
+
+<!-- DELETE MODAL POPUP -->
+<style>
+    .overlay {
+        width: 100%;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(2px);
+        position: fixed;
+        z-index: 1;
+        opacity: 0;
+        pointer-events: none;
+        transition: 200ms;
+    }
+    .overlay.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    /* DELETE MODAL */
+    .delete-popup {
+        top: 30%;
+        left: 40%;
+        width: 500px;
+        background: #F7FCF5;
+        position: fixed;
+        z-index: 2;
+        opacity: 0;
+        pointer-events: none;
+        padding: 20px;
+        border-radius: 16px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        max-width: 330px;
+        transition: 300ms;
+        transform: scale(1.1);
+    }
+    .delete-popup.active {
+        opacity: 1;
+        pointer-events: auto;
+        transform: scale(1);
+    }
+
+    .dlt-icon {
+        background: rgba(255, 0, 0, 0.15);
+        display: flex;
+        padding: 10px;
+        border-radius: 99px;
+        width: fit-content;
+    }
+    .dlt-icon svg {
+        fill: red;
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .dlt-title {
+        font-size: 28px;
+        margin: 10px 0;
+        font-family: 'Poppins', sans-serif;
+    }
+    .dlt-msg { font-size: large; }
+
+    .dlt-action-btns-group {
+        margin-top: 25px;
+        width: 100%;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        gap: 30px;
+    }
+    form { width: 50%;}
+    .dlt-cancel-btn {
+        width: 50%;
+        background: #f1f1f1;
+        color: black;
+        font-size: 16px;
+        font-weight: 600;
+        border: none;
+        outline: none;
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.25);
+    }
+    .dlt-yes-btn {
+        width: 100%;
+        background: red;
+        color: white;
+        font-size: 16px;
+        box-shadow: 0px 10px 10px rgba(255, 0, 0, 0.25);
+        padding: 10px;
+        border-radius: 10px;
+        border: none;
+        outline: none;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 250ms;
+    }
+    .dlt-action-btns-group button:hover {
+        transform: translateY(-5px);
+        opacity: 0.5;
+    }
+    .dlt-action-btns-group button:active { transform: scale(0.5); }
+</style>
+<!-- END -->
+
+<body>
+    <!-- OVERLAY -->
+    <div class="overlay" id="overlay" onclick="closeDeletePopup()"></div>
+
+    <h2 class="main-heading">All chats are here :</h2>
+    <form class="new-btn" method="GET" action="/chats/new">
+        <button>New Chat</button>
+    </form>
+
+    <div class="container">
+    <% for (const chat of chats) { %>
+        <div class="chat-box">
+            <h1 class="heading">Chat</h1>
+            <div class="delete-btn">
+                <svg onclick="showDeletePopup()" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M6 7H5v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7H6zm10.618-3L15 2H9L7.382 4H3v2h18V4z"></path></svg>
+            </div>
+            <!-- DELETE MODAL POPUP -->
+            <div class="delete-popup" id="delete-popup">
+                <div class="dlt-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M6 7H5v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7H6zm4 12H8v-9h2v9zm6 0h-2v-9h2v9zm.618-15L15 2H9L7.382 4H3v2h18V4z"></path></svg>
+                </div>
+                    <h2 class="dlt-title">Delete item!</h2>
+                    <p class="dlt-msg">Are you Sure?</p>
+                <div class="dlt-action-btns-group">
+                    <button class="dlt-cancel-btn" onclick="closeDeletePopup()">Cancel</button>
+                    <form class="delete-btn" method="POST" action="/chats/<%= chat.id %>?_method=DELETE">
+                        <button class="dlt-yes-btn" onclick="closeDeletePopup()">Delete</button>
+                    </form>
+                </div>
+            </div>
+            <!-- END -->
+            <p id="sent-by">sent by: <%= chat.from %></p>
+            <div class="msg-box">
+                <p><%= chat.message %></p>
+                <form class="edit-btn" method="GET" action="/chats/<%= chat.id %>/edit">
+                    <button>edit</button>
+                </form>
+            </div>
+            <p id="seen-by">seen by: <%= chat.to %></p>
+            <hr />
+            <div class="date-and-time">
+                <p><%= chat.created_at.toString().split(" ")[4] %></p>
+                <p><%= chat.created_at.toString().split(" ").slice(0, 4).join("-") %></p>
+            </div>
+        </div>
+    <% } %>
+    </div>
+</body>
+
+<!-- DELETE MODAL POPUP SCRIPTING -->
+<script>
+    const overlay = document.getElementById('overlay');
+    const removePopup = document.getElementById('delete-popup');
+
+    function showDeletePopup() {
+        overlay.classList.add('active');
+        removePopup.classList.add('active');
+    }
+
+    function closeDeletePopup() {
+        overlay.classList.remove('active');
+        removePopup.classList.remove('active');
+    }
+</script>
+<!-- END -->
+</html>

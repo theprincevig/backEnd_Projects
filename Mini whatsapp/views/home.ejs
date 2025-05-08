@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini whatsapp</title>
+</head>
+<!-- HOME PAGE STYLING -->
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap');
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        transition: 0.3s;
+    }
+
+    body {
+        width: 100%;
+        height: 100vh;
+        font-family: 'Sour Gummy', sans-serif;
+        background: #E5F5E0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .heading {
+        color: #006D2C;
+        font-size: 40px;
+        text-shadow: 2px 4px 4px rgba(0, 0, 0, 0.3);
+        animation: move 1.5s infinite alternate;
+    }
+    @keyframes move {
+        0% {
+            transform: translateY(0);
+        }
+        100% {
+            transform: translateY(-10px);
+        }
+    }
+
+    button a {
+        text-decoration: none;
+        color: white;
+        font-weight: 600;
+    }
+    button {
+        margin-top: 20px;
+        padding: 8px 20px;
+        font-size: 18px;
+        border: none;
+        outline: none;
+        border-radius: 10px;
+        background: #74C476;
+        cursor: pointer;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.35);
+    }
+    button:hover {
+        background: #41AB5D;
+        transform: scale(1.1);
+    }
+    button:active { opacity: 0.75; }
+</style>
+<!-- END -->
+ 
+<body>
+    <h1 class="heading">Mini whatsApp</h1>
+    <button><a href="http://localhost:8080/chats">Join</a></button>
+</body>
+</html>
