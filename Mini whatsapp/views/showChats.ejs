@@ -288,19 +288,19 @@
         <div class="chat-box">
             <h1 class="heading">Chat</h1>
             <div class="delete-btn">
-                <svg onclick="showDeletePopup()" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M6 7H5v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7H6zm10.618-3L15 2H9L7.382 4H3v2h18V4z"></path></svg>
+                <svg onclick="showDeletePopup('<%= chat.id %>')" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M6 7H5v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7H6zm10.618-3L15 2H9L7.382 4H3v2h18V4z"></path></svg>
             </div>
             <!-- DELETE MODAL POPUP -->
-            <div class="delete-popup" id="delete-popup">
+            <div class="delete-popup" id="delete-popup-<%= chat.id %>">
                 <div class="dlt-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M6 7H5v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7H6zm4 12H8v-9h2v9zm6 0h-2v-9h2v9zm.618-15L15 2H9L7.382 4H3v2h18V4z"></path></svg>
                 </div>
                     <h2 class="dlt-title">Delete item!</h2>
                     <p class="dlt-msg">Are you Sure?</p>
                 <div class="dlt-action-btns-group">
-                    <button class="dlt-cancel-btn" onclick="closeDeletePopup()">Cancel</button>
+                    <button class="dlt-cancel-btn" onclick="closeDeletePopup('<%= chat.id %>')">Cancel</button>
                     <form class="delete-btn" method="POST" action="/chats/<%= chat.id %>?_method=DELETE">
-                        <button class="dlt-yes-btn" onclick="closeDeletePopup()">Delete</button>
+                        <button class="dlt-yes-btn" onclick="closeDeletePopup('<%= chat.id %>')">Delete</button>
                     </form>
                 </div>
             </div>
@@ -325,15 +325,18 @@
 
 <!-- DELETE MODAL POPUP SCRIPTING -->
 <script>
-    const overlay = document.getElementById('overlay');
-    const removePopup = document.getElementById('delete-popup');
+    function showDeletePopup(chatID) {
+        const overlay = document.getElementById('overlay');
+        const removePopup = document.getElementById(`delete-popup-${chatID}`);
 
-    function showDeletePopup() {
         overlay.classList.add('active');
         removePopup.classList.add('active');
     }
 
-    function closeDeletePopup() {
+    function closeDeletePopup(chatID) {
+        const overlay = document.getElementById('overlay');
+        const removePopup = document.getElementById(`delete-popup-${chatID}`);
+
         overlay.classList.remove('active');
         removePopup.classList.remove('active');
     }
